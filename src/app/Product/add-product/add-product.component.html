@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="row">
+        <div class="mt-4 col-md-6 offset-md-5">
+            <div>
+                <button (click)="clearForm()" mat-mini-fab color="warn" >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            <form [formGroup]="ProductForm" (ngSubmit)="onsubmit()">
+                <div>
+                    <mat-form-field  appearance="fill">
+                        <mat-label>Product Name</mat-label>
+                        <input matInput type="text" formControlName="pName" id="pName">
+                        <span class="text-danger"*ngIf="!this.ProductForm.get('pName')?.valid  
+                                        && this.ProductForm.get('pName')?.touched">
+                            you must enter a product name and it should be more thamn 4 characters
+                        </span>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field  appearance="fill">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput
+                        formControlName="pDescription" 
+                        id="pDescription"
+                        ></textarea>
+                        <span class="text-danger"*ngIf="!this.ProductForm.get('pDescription')?.valid  
+                        && this.ProductForm.get('pDescription')?.touched">
+                            you must enter a product description
+                        </span>
+                      </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a Category</mat-label>
+                        <mat-select  formControlName="pCategory">
+                          <mat-option *ngFor="let category of Categories" value="category">{{category}}</mat-option>
+                        </mat-select>
+                        <span class="text-danger"*ngIf="!this.ProductForm.get('pCategory')?.valid  
+                        && this.ProductForm.get('pCategory')?.touched">
+                            you must select a product category
+                        </span>
+                      </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Product Quantity</mat-label>
+                        <input matInput type="number" formControlName="pQuantity" id="pQuantity">
+                        <span class="text-danger"*ngIf="!this.ProductForm.get('pQuantity')?.valid  
+                        && this.ProductForm.get('pQuantity')?.touched">
+                            you must enter a product quantity
+                        </span>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Product Price</mat-label>
+                        <input matInput type="number" formControlName="pPrice" id="pPrice">
+                        <span class="text-danger"*ngIf="!this.ProductForm.get('pPrice')?.valid  
+                        && this.ProductForm.get('pPrice')?.touched">
+                            you must enter a product price
+                        </span>
+                    </mat-form-field>
+                </div>    
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Product Image</mat-label>
+                        <input matInput  formControlName="pImage" id="pImage">
+                        <span class="text-danger"*ngIf="!this.ProductForm.get('pImage')?.valid  
+                        && this.ProductForm.get('pImage')?.touched">
+                            you must enter a product image URL
+                        </span>
+                    </mat-form-field>
+                </div>    
+                <div *ngIf="this.ProductForm.get('pImage')?.value != null">
+                    <img [src]="this.ProductForm.get('pImage')?.value" class="img-fluid" />
+                </div>
+                <div>
+                    <button routerLink="" mat-raised-button color="primary">Cancel</button>
+                    <button [disabled]="!ProductForm.valid" mat-raised-button color="accent">Add</button>
+                </div>            
+            </form>
+        </div>
+    </div>
+</div>
+
