@@ -2,7 +2,6 @@ import{Action} from "@ngrx/store"
 import { Product } from "src/app/shared/Models/product.model"
 
 export const ADDPRODUCT = "ADDPRODUCT"
-export const GETPRODUCTS= "GETPRODUCTS"
 export const EDITPRODUCT = "EDITPRODUCT"
 export const DELETEPRODUCT = "DELETEPRODUCT"
 
@@ -10,11 +9,6 @@ export class AddProductAction implements Action{
 readonly type = ADDPRODUCT
 
 constructor(public payload:Product){}
-}
-
-export class GetProductsAction implements Action{
-    readonly type =GETPRODUCTS
-    constructor(public payload :Product[]){}
 }
 
 
@@ -30,4 +24,4 @@ export class DeleteProductAction implements Action{
 }
 
 export type ProductActions = AddProductAction | DeleteProductAction |
-                            GetProductsAction | EditProductAction
+                             EditProductAction

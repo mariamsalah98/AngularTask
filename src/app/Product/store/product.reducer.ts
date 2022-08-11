@@ -1,5 +1,5 @@
 import { Product } from "src/app/shared/Models/product.model";
-import { ADDPRODUCT, DELETEPRODUCT, EDITPRODUCT, GETPRODUCTS, ProductActions } from "./product.actions";
+import { ADDPRODUCT, DELETEPRODUCT,  EDITPRODUCT, ProductActions } from "./product.actions";
 
 const initialState={
     products:[]
@@ -14,13 +14,26 @@ switch(action.type){
             action.payload
         ]
     }
- case GETPRODUCTS:
  case EDITPRODUCT:
-case DELETEPRODUCT:
-    let deletedProduct = state.products.find(p=>p.id==action.payload)
-    let products = state.products;
+    let product = state.products.find(product=>{
+        product.id==action.payload.id
+    })
+    let updatedproduct = {
+        ...product,
+        ...action.payload.product
+    }
+    let updatedProducts= [...state.products]
+    updatedProducts[action.payload.id]=updatedproduct
     return{
-
+        ...state ,
+        products:updatedProducts
+    }
+case DELETEPRODUCT:
+    return{
+        ...state ,
+        products : state.products.filter(product=>{
+                    product.id==action.payload;
+                })
     }
 }
 }
