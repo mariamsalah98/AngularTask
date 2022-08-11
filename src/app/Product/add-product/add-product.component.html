@@ -34,7 +34,7 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Select a Category</mat-label>
                         <mat-select  formControlName="pCategory">
-                          <mat-option *ngFor="let category of Categories" value="category">{{category}}</mat-option>
+                          <mat-option *ngFor="let category of Categories" [value]="category">{{category}}</mat-option>
                         </mat-select>
                         <span class="text-danger"*ngIf="!this.ProductForm.get('pCategory')?.valid  
                         && this.ProductForm.get('pCategory')?.touched">
@@ -76,8 +76,8 @@
                     <img [src]="this.ProductForm.get('pImage')?.value" class="img-fluid" />
                 </div>
                 <div>
-                    <button routerLink="" mat-raised-button color="primary">Cancel</button>
-                    <button [disabled]="!ProductForm.valid" mat-raised-button color="accent">Add</button>
+                    <button (click)="cancel()" mat-raised-button color="primary">Cancel</button>
+                    <button type="submit" [disabled]="!ProductForm.valid" mat-raised-button color="accent">{{editMode? "Edit" : "Add"}}</button>
                 </div>            
             </form>
         </div>

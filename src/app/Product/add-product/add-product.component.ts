@@ -10,14 +10,34 @@ import { ProductsServiceService } from 'src/app/shared/Services/PoductsService/p
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
-  Categories:string[]=["Dairy" , "fruits" , "sweets" , "poultery"]
+  Categories:string[]=[]
   selectedProduct:Product
   selectedIndex: number
-
   ProductForm:FormGroup 
+  editMode : boolean = false
 
   onsubmit(){
-    this.productService.addProduct(this.ProductForm.value);
+    let newProduct:Product={
+      id : this.productService.count,
+      name: this.ProductForm.get("pName").value,
+      category :this.ProductForm.get("pCategory").value,
+      price : this.ProductForm.get("pPrice").value,
+      availableQuantity : this.ProductForm.get("pQuantity").value,
+      description : this.ProductForm.get("pDescription").value,
+      image :this.ProductForm.get("pImage").value
+    }
+    if(this.editMode){
+      this.productService.editProduct(this.selectedIndex,newProduct);
+    }
+    else{
+      this.productService.addProduct(newProduct);
+    }
+    this.router.navigateByUrl("/product/list")
+  }
+
+  cancel(){
+    this.productService.editMode=false;
+    this.productService.selectedProduct=null;
     this.router.navigateByUrl("/product/list")
   }
 
@@ -26,9 +46,13 @@ export class AddProductComponent implements OnInit {
   }
 
   constructor(private productService:ProductsServiceService ,
-              private router:Router ) { 
-                this.selectedProduct=this.productService.selectedProduct
-                this.selectedIndex=this.productService.getIdOfProduct(this.selectedProduct);
+              private router:Router  ) { 
+                if(this.productService.selectedProduct){
+                  this.selectedProduct=this.productService.selectedProduct
+                  this.selectedIndex=this.selectedProduct.id;
+                }
+                this.editMode=this.productService.editMode
+                this.Categories=this.productService.Categories;
               }
 
   ngOnInit(): void {

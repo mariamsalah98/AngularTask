@@ -1,0 +1,13 @@
+<div class="container">
+<div class="row">
+    <div *ngFor="let category of categories" class="mt-3 col-md-3">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="https://media.wired.com/photos/5c9040ee4950d24718d6da99/16:9/w_2400,h_1350,c_limit/shoppingcart-1066110386.jpg">
+            <div class="card-body">
+              <h2 class="card-title">{{category}}</h2>
+              <a [routerLink]="['/shop' ,  category]" class="btn btn-primary">Shop</a>
+            </div>
+          </div>
+    </div>
+</div>
+</div>

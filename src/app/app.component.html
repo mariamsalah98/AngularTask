@@ -1,3 +1,31 @@
-<router-outlet>
-    
-</router-outlet>
+ <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Marketna</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="w-100 d-flex justify-content-between navbar-nav align-items-center">
+          <div class="navbarleft">
+            <li class="nav-item">
+              <a class="nav-link" 
+              [routerLink]="['product' , 'list']"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact:true}" >Manage Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['shop']">Shop</a>
+            </li>
+          </div>
+          <div>
+            <li class="nav-item mt-2">
+              <a [matBadge]="cartLength" matBadgeColor="warn"  class="nav-link" [routerLink]="['shop' ,'cart']">
+                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="shopping_cart"></mat-icon>
+              </a>
+            </li>
+          </div>       
+        </ul>
+      </div>
+    </div>
+  </nav>
+<router-outlet></router-outlet>

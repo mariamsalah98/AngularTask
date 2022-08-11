@@ -1,62 +1,87 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
+import { ChildActivationStart } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 import { Product } from '../../Models/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsServiceService {
-  
-  private productList:Product[]=[
-    {
-      name:"Juhayna milk" ,
-      description:"full cream" ,
-      price:22 ,
-      availableQuantity:2 , 
-      category : "dairy" , 
-      image:"data:image/jpeg;base64,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"},
-      {
-        name:"Juhayna milk" ,
-        description:"skimmed" ,
-        price:25 ,
-        availableQuantity:3 , 
-        category : "dairy" , 
-        image:"data:image/jpeg;base64,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"}
-  ];
-  productListChanged:Subject<Product[]> = new Subject();
-  productSelected : Subject<Product> = new Subject();
-  selectedProduct:Product
+export class ProductsServiceService implements OnInit {
 
-  getProducts(){
-    return this.productList;
-  }
+  constructor(private http:HttpClient) {
 
-  getProductById(index:number){
-    return this.productList[index];
-  }
+    this.getProducts().subscribe(data=>this.productList=data)
 
-  getIdOfProduct(product:Product){
-    return this.productList.indexOf(product);
-  }
-
-  addProduct(newproduct:Product){
-    this.productList.push(newproduct);
-    this.productListChanged.next(this.productList);
-  }
-
-  editProduct(index:number , newproduct:Product){
-     this.productList[index].name= newproduct.name;
-     this.productList[index].description= newproduct.description;
-     this.productList[index].price= newproduct.price;
-     this.productList[index].availableQuantity= newproduct.availableQuantity;
-     this.productList[index].image= newproduct.image;
-     this.productList[index].category= newproduct.category;
-     this.productListChanged.next(this.productList);
-  }
-
-  constructor() { 
+    this.getCategories().subscribe(data=>{
+      this.Categories=data
+    })
+    
     this.productSelected.subscribe((product)=>{
       this.selectedProduct=product
     })
   }
+  ngOnInit(): void {
+  }
+
+  private productList:Product[]=[]
+  count = this.productList.length
+  Categories:string[]
+  productSelected : Subject<Product> = new Subject();
+  selectedProduct:Product
+  editMode:boolean = false  ;
+
+
+  getProducts(){
+     return this.http.get<Product[]>("http://localhost:3000/products")
+  }
+
+  getCategories(){
+    return this.http.get<string[]>("http://localhost:3000/categories")
+  }
+
+  getProductsByCategory(category:string){
+    let categorizedProducts:Product[] = []
+    this.getProducts().subscribe(data=>{
+      for (const product of data) {
+        if (product.category == category) {
+          categorizedProducts.push(product)   ; 
+        }
+      }
+    })
+    return categorizedProducts ;
+  }
+
+
+  addProduct(newproduct:Product){
+    this.http.post<Product>("http://localhost:3000/products" , newproduct).subscribe
+    (result=>{
+      this.productList.push(result);
+    });
+  }
+
+  editProduct(index:number , newproduct:Product){
+    this.http.put<Product>("http://localhost:3000/products/"+index ,  newproduct).subscribe(data=>{
+      this.productList.map(x=>{
+        if(x.id==index)
+        x=data;
+      })
+    });
+     this.editMode=false ;
+     this.selectedProduct= null;
+  }
+
+  deleteProducts(indexes:number[]){
+    let prevIndex : number = -1
+    for(let index of indexes){
+      if(index < prevIndex || prevIndex == -1){
+        this.http.delete("http://localhost:3000/products/"+index).subscribe();
+      }
+      else{
+        this.http.delete("http://localhost:3000/products/"+(index-1)).subscribe();
+      }
+      prevIndex=index ;
+    }
+  }
+
 }

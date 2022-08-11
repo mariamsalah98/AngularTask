@@ -2,8 +2,12 @@
     <div class="row">
         <div class="col-md-12 mt-4 ">
             <button mat-raised-button color="accent" routerLink="/product/add">Add Product</button>
-            <button mat-raised-button color="primary" (click)="EditProduct()" >Edit Product</button>
-            <button mat-raised-button color="primary" (click)="refresh()" >Refresh</button>
+            <button mat-raised-button color="primary" 
+            [disabled]="this.grid?.api.getSelectedRows().length &lt; 1" 
+            (click)="EditProduct()" >Edit Product</button>
+            <button mat-raised-button color="warn" type="button"
+            (click)="deleteProduct()"
+             >Delete Product</button>
         </div>
     </div>
     <div class="row">
@@ -12,12 +16,11 @@
             class="ag-theme-alpine"
             [rowData]="rowData" [columnDefs]="colDefs"
             [rowSelection]="'multiple'"
-            [animateRows]="true">
+            [animateRows]="true"
+            [pagination]="true"
+            [paginationPageSize]="10">
             </ag-grid-angular>
         </div>
     </div>
-    <div class="row">
-        {{rowData | json}}
-    </div>
-</div>
-
+</div> 
+  
