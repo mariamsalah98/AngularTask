@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as fromCart from "./store/cart.reducer"
 import { CartItem, CartService } from 'src/app/shared/Services/CartService/cart.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -8,16 +11,17 @@ import { CartItem, CartService } from 'src/app/shared/Services/CartService/cart.
 })
 export class CartComponent implements OnInit {
 
-  shoppingList:CartItem[]
+  shoppingList:Observable<{cart:CartItem[]}>
 
-  constructor(private cartService:CartService) {
+  constructor(private cartService:CartService , private store:Store<fromCart.State>) {
    }
 
   ngOnInit(): void {
-    this.shoppingList=this.cartService.getCart();
-    this.cartService.cartUpdated.subscribe(newCart=>{
-      this.shoppingList= newCart;
-    })
+    this.shoppingList=this.store.select('cart');
+    // this.shoppingList=this.cartService.getCart();
+    // this.cartService.cartUpdated.subscribe(newCart=>{
+    //   this.shoppingList= newCart;
+    // })
   }
 
   delete(id:number){

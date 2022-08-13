@@ -15,18 +15,17 @@ import { ConfirmationDialogueComponent } from '../confirmation-dialogue/confirma
 export class ProductListComponent implements OnInit {
 
   @ViewChild(AgGridAngular)grid:AgGridAngular ;
-
-  categoriesValuesProvidedFilterParams ={
-    values: this.productService.Categories
-   }; 
   
 
   rowData:Product[]=[]
   colDefs:ColDef[]=[
-    {field : "name" , sortable : true , filter: true },
+    {field : "name" , sortable : true , filter: true  , checkboxSelection: true,},
     {field:"description"},
     {field: "category" , sortable : true,filter :'agSetColumnFilter' ,
-      filterParams:this.categoriesValuesProvidedFilterParams},
+    filterParams: {
+      buttons: ['reset', 'apply'],
+      excelMode: 'windows',
+    }},
     {field : "availableQuantity", sortable : true,filter: 'agNumberColumnFilter' },
     {field: "price", sortable : true ,  filter: 'agNumberColumnFilter'  ,
     cellRenderer : params=>{

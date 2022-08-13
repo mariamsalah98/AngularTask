@@ -24,6 +24,7 @@ import{MatIconModule} from '@angular/material/icon';
 import {MatBadgeModule} from '@angular/material/badge'
 import { MatDialogModule } from '@angular/material/dialog';
 import { ProductReducer } from './Product/store/product.reducer';
+import { CartReducer } from './shopping/cart/store/cart.reducer';
 
 
 @NgModule({
@@ -40,9 +41,9 @@ import { ProductReducer } from './Product/store/product.reducer';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    StoreModule.forRoot({cart : CartReducer}),
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot({Products : ProductReducer}),
 
     AgGridModule,
     BrowserAnimationsModule,

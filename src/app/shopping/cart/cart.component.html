@@ -1,11 +1,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-          <div class="offset-md-1 mt-4" *ngIf="shoppingList?.length == 0">
+          <div class="offset-md-1 mt-4" *ngIf="(shoppingList | async).cart?.length ==0">
             <img class="emptycart"
              src="https://mir-s3-cdn-cf.behance.net/projects/404/95974e121862329.Y3JvcCw5MjIsNzIxLDAsMTM5.png" />
           </div>
-            <table *ngIf="shoppingList?.length > 0"class="table">
+            <table *ngIf="(shoppingList | async).cart?.length> 0"class="table">
                 <thead>
                   <tr>
                     <th scope="col"></th>
@@ -18,7 +18,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of shoppingList">
+                  <tr *ngFor="let item of (shoppingList | async).cart">
                     <th scope="row"></th>
                     <td>
                         <img [src]="item.image" class="img-fluid">

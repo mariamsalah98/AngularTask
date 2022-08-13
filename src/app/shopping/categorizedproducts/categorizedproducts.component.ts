@@ -1,7 +1,10 @@
 import { Component,  OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as fromCart from "../cart/store/cart.reducer"
+import * as cartActions from "../cart/store/cart.actions"
 import { Product } from 'src/app/shared/Models/product.model';
-import { CartService } from 'src/app/shared/Services/CartService/cart.service';
+import {  CartService } from 'src/app/shared/Services/CartService/cart.service';
 import { ProductsServiceService } from 'src/app/shared/Services/PoductsService/products-service.service';
 
 @Component({
@@ -17,6 +20,7 @@ export class CategorizedproductsComponent implements OnInit {
   constructor(private route:ActivatedRoute ,  
      private productService:ProductsServiceService ,
      private cartService:CartService,
+     private store : Store<fromCart.State> ,
      private router : Router ) { }
 
   ngOnInit(): void {
@@ -34,7 +38,8 @@ export class CategorizedproductsComponent implements OnInit {
       availableQuantity: product.availableQuantity -1
     }
     this.productService.editProduct(index , newProduct);
-    this.cartService.addedToCart(newProduct);
+    this.store.dispatch(new cartActions.addItem(newProduct));
+    //this.cartService.addedToCart(newProduct);
     this.router.navigate(["shop","cart"]);
   }
 
