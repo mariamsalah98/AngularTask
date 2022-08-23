@@ -26,6 +26,7 @@ export class CartComponent implements OnInit {
 
   delete(id:number){
     this.cartService.deleteItem(id);
+    
   }
   plus(id:number){
     this.cartService.plusOne(id);

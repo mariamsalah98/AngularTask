@@ -6,7 +6,7 @@
              src="https://mir-s3-cdn-cf.behance.net/projects/404/95974e121862329.Y3JvcCw5MjIsNzIxLDAsMTM5.png" />
           </div>
             <table *ngIf="(shoppingList | async).cart?.length> 0"class="table">
-                <thead>
+              <thead>
                   <tr>
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -25,18 +25,18 @@
                     </td>
                     <td>{{item.name}}</td>
                     <td>
-                      <button mat-mini-fab color="accent" (click)="minus(item.id)">
+                      <button  class="minus" mat-mini-fab color="accent" (click)="minus(item.id)">
                        -
                       </button>
                       {{item.quantity}}
-                      <button mat-mini-fab color="accent" (click)="plus(item.id)">
+                      <button class="plus"mat-mini-fab color="accent" (click)="plus(item.id)">
                         +
                       </button>
                     </td>
                     <td>{{item.price}}</td>
                     <td>{{item.price * item.quantity}}</td>
                     <td>
-                      <button (click)="delete(item.id)" mat-mini-fab color="warn" >
+                      <button class="delete" (click)="delete(item.id)" mat-mini-fab color="warn" >
                         <mat-icon>delete</mat-icon>
                       </button>
                     </td>

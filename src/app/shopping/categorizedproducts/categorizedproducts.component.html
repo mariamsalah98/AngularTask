@@ -6,9 +6,9 @@
                 <div class="card-body">
                   <h2 class="card-title">{{product.name}}</h2>
                   <button [disabled]='product.availableQuantity==0'class="btn btn-primary" (click)="addToCart(product)">
-                    {{product.availableQuantity==0?"Out Of Stock" : "Add to cart"}}
+                    {{product.availableQuantity==0? "Out Of Stock" : "Add to "}}
+                    <mat-icon *ngIf="product.availableQuantity >0">shopping_cart</mat-icon>
                   </button>
-                  <a  class="btn btn-info">Details</a>
                 </div>
               </div>
         </div>

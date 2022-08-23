@@ -8,10 +8,12 @@ export interface State {
 }
 
 const initialstate:{cart:CartItem[]}={
-    cart : []
+    cart : JSON.parse(localStorage.getItem('Cart')) ??[]
 }
 
+
 export function CartReducer (state= initialstate , action : fromCart.CartActions) {
+   console.log(state);
     let newCart:CartItem[];
     let Item:CartItem ;
     let newItem:CartItem;
@@ -45,6 +47,7 @@ export function CartReducer (state= initialstate , action : fromCart.CartActions
                     }
                 ]
               }
+              localStorage.setItem("Cart" , JSON.stringify(newCart));
             return{
                 ...state,
                 cart : newCart
@@ -52,6 +55,7 @@ export function CartReducer (state= initialstate , action : fromCart.CartActions
         case fromCart.DELETECARTITEM:
             newCart= [...state.cart]
             newCart.splice(action.payload-1 ,1)
+            localStorage.setItem("Cart" , JSON.stringify(newCart));
             return{
                 ...state,
                 cart : newCart
@@ -68,6 +72,7 @@ export function CartReducer (state= initialstate , action : fromCart.CartActions
                        quantity : Item.quantity+1                  
                     }
                     newCart[action.payload-1]=newItem
+                    localStorage.setItem("Cart" , JSON.stringify(newCart));
             return{
                 ...state ,
                 cart : newCart
@@ -75,6 +80,7 @@ export function CartReducer (state= initialstate , action : fromCart.CartActions
         case fromCart.CARTITEMMINUSONE:
             newCart = [...state.cart];
             Item = state.cart.find(item=>item.id==action.payload);
+            localStorage.setItem("Cart" , JSON.stringify(newCart));
              newItem={
                        name : Item.name ,
                        id : Item.id ,
